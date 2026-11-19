@@ -1,3 +1,12 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 5 optimizations:
+# - [HIGH] Add cargo dependency cache to "test" job
+# - [HIGH] Add cargo dependency cache to "conformance" job
+# - [HIGH] Add cargo dependency cache to "fuzz" job
+# - [HIGH] Add cargo dependency cache to "examples" job
+# - [MEDIUM] Add concurrency group to "rust.yml"
+# Estimated savings: ~34 min/run
+#
 name: Rust
 
 on:
@@ -7,6 +16,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 env:
   CARGO_TERM_COLOR: always
 
